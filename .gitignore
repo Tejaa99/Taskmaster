@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+pythonenv*
+
+# Environment variables
+backend/.env
+.env
+*.env
+
+# Uploaded files (don't commit user uploads)
+backend/uploads/
+backend/profile_photos/
+!backend/uploads/.gitkeep
+!backend/profile_photos/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log

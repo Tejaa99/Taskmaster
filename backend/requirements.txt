@@ -1,0 +1,24 @@
+# Core dependencies
+flask==2.3.3
+flask-cors==4.0.0
+flask-pymongo==2.3.0
+python-dotenv==1.0.0
+bcrypt==4.0.1
+pyjwt==2.8.0
+pymongo==4.5.0
+email-validator==2.1.0
+werkzeug==2.3.7
+
+# ==================== NEW FEATURE 1: EMAIL DEPENDENCIES ====================
+flask-mail==0.9.1
+apscheduler==3.10.4
+
+# ==================== NEW FEATURE 2: FILE UPLOAD DEPENDENCIES ====================
+flask-uploads==0.2.1
+
+# ==================== NEW FEATURE 4: EXPORT DEPENDENCIES ====================
+pandas==2.1.0
+reportlab==4.0.4
+openpyxl==3.1.2
+openpyxl==3.1.2
+gunicorn==21.2.0 
