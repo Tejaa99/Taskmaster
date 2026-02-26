@@ -9,16 +9,12 @@ pymongo==4.5.0
 email-validator==2.1.0
 werkzeug==2.3.7
 
-# ==================== NEW FEATURE 1: EMAIL DEPENDENCIES ====================
+# Email
 flask-mail==0.9.1
 apscheduler==3.10.4
 
-# ==================== NEW FEATURE 2: FILE UPLOAD DEPENDENCIES ====================
-flask-uploads==0.2.1
+# Production server
+gunicorn==21.2.0
 
-# ==================== NEW FEATURE 4: EXPORT DEPENDENCIES ====================
-pandas==2.1.0
-reportlab==4.0.4
-openpyxl==3.1.2
-openpyxl==3.1.2
-gunicorn==21.2.0 
+# Remove pandas and reportlab for now
+# We'll add them back after fixing Python version
