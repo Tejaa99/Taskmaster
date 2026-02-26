@@ -1,12 +1,12 @@
-echo flask==2.3.3 > requirements.txt
-echo flask-cors==4.0.0 >> requirements.txt
-echo flask-pymongo==2.3.0 >> requirements.txt
-echo python-dotenv==1.0.0 >> requirements.txt
-echo bcrypt==4.0.1 >> requirements.txt
-echo pyjwt==2.8.0 >> requirements.txt
-echo pymongo==4.5.0 >> requirements.txt
-echo email-validator==2.1.0 >> requirements.txt
-echo werkzeug==2.3.7 >> requirements.txt
-echo flask-mail==0.9.1 >> requirements.txt
-echo apscheduler==3.10.4 >> requirements.txt
-echo gunicorn==21.2.0 >> requirements.txt
+flask==2.3.3
+flask-cors==4.0.0
+flask-pymongo==2.3.0
+python-dotenv==1.0.0
+bcrypt==4.0.1
+pyjwt==2.8.0
+pymongo==4.5.0
+email-validator==2.1.0
+werkzeug==2.3.7
+flask-mail==0.9.1
+apscheduler==3.10.4
+gunicorn==21.2.0
