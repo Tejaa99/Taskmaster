@@ -23,11 +23,11 @@ from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
 
 # Export features
-import pandas as pd
-from reportlab.lib import colors
-from reportlab.lib.pagesizes import letter, A4
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
-from reportlab.lib.styles import getSampleStyleSheet
+# import pandas as pd
+# from reportlab.lib import colors
+# from reportlab.lib.pagesizes import letter, A4
+# from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
+# from reportlab.lib.styles import getSampleStyleSheet
 
 # ==================== INITIALIZE FLASK APP ====================
 app = Flask(__name__)
@@ -1042,111 +1042,111 @@ def get_task_activity(user_id, task_id):
 
 # ==================== NEW FEATURE 4: EXPORT ROUTES ====================
 
-@app.route('/api/export/csv', methods=['GET'])
-@token_required
-def export_csv(user_id):
-    """Export tasks to CSV"""
-    try:
-        tasks = list(tasks_collection.find({'userId': ObjectId(user_id)}))
+# @app.route('/api/export/csv', methods=['GET'])
+# @token_required
+# def export_csv(user_id):
+#     """Export tasks to CSV"""
+#     try:
+#         tasks = list(tasks_collection.find({'userId': ObjectId(user_id)}))
         
-        # Prepare data for CSV
-        data = []
-        for task in tasks:
-            due_date = task['dueDate'].strftime('%Y-%m-%d') if hasattr(task['dueDate'], 'strftime') else str(task['dueDate'])
-            created_at = task['createdAt'].strftime('%Y-%m-%d') if hasattr(task['createdAt'], 'strftime') else str(task['createdAt'])
+#         # Prepare data for CSV
+#         data = []
+#         for task in tasks:
+#             due_date = task['dueDate'].strftime('%Y-%m-%d') if hasattr(task['dueDate'], 'strftime') else str(task['dueDate'])
+#             created_at = task['createdAt'].strftime('%Y-%m-%d') if hasattr(task['createdAt'], 'strftime') else str(task['createdAt'])
             
-            data.append({
-                'Title': task['title'],
-                'Description': task.get('description', ''),
-                'Due Date': due_date,
-                'Priority': task['priority'],
-                'Category': task['category'],
-                'Status': task['status'],
-                'Created': created_at
-            })
+#             data.append({
+#                 'Title': task['title'],
+#                 'Description': task.get('description', ''),
+#                 'Due Date': due_date,
+#                 'Priority': task['priority'],
+#                 'Category': task['category'],
+#                 'Status': task['status'],
+#                 'Created': created_at
+#             })
         
-        df = pd.DataFrame(data)
+#         df = pd.DataFrame(data)
         
-        # Create CSV
-        csv_data = df.to_csv(index=False)
+#         # Create CSV
+#         csv_data = df.to_csv(index=False)
         
-        response = app.response_class(
-            response=csv_data,
-            status=200,
-            mimetype='text/csv',
-            headers={'Content-Disposition': 'attachment; filename=tasks_export.csv'}
-        )
+#         response = app.response_class(
+#             response=csv_data,
+#             status=200,
+#             mimetype='text/csv',
+#             headers={'Content-Disposition': 'attachment; filename=tasks_export.csv'}
+#         )
         
-        return response
+#         return response
         
-    except Exception as e:
-        print(f"Export error: {str(e)}")
-        return jsonify({'success': False, 'message': f'Export failed: {str(e)}'}), 500
+#     except Exception as e:
+#         print(f"Export error: {str(e)}")
+#         return jsonify({'success': False, 'message': f'Export failed: {str(e)}'}), 500
 
-@app.route('/api/export/pdf', methods=['GET'])
-@token_required
-def export_pdf(user_id):
-    """Export tasks to PDF"""
-    try:
-        tasks = list(tasks_collection.find({'userId': ObjectId(user_id)}))
-        user = users_collection.find_one({'_id': ObjectId(user_id)})
+# @app.route('/api/export/pdf', methods=['GET'])
+# @token_required
+# def export_pdf(user_id):
+#     """Export tasks to PDF"""
+#     try:
+#         tasks = list(tasks_collection.find({'userId': ObjectId(user_id)}))
+#         user = users_collection.find_one({'_id': ObjectId(user_id)})
         
-        # Create PDF buffer
-        buffer = io.BytesIO()
-        doc = SimpleDocTemplate(buffer, pagesize=A4)
-        elements = []
+#         # Create PDF buffer
+#         buffer = io.BytesIO()
+#         doc = SimpleDocTemplate(buffer, pagesize=A4)
+#         elements = []
         
-        # Add title
-        styles = getSampleStyleSheet()
-        title = Paragraph(f"Task Report for {user['name']}", styles['Title'])
-        elements.append(title)
-        elements.append(Paragraph(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}", styles['Normal']))
-        elements.append(Paragraph(" ", styles['Normal']))
+#         # Add title
+#         styles = getSampleStyleSheet()
+#         title = Paragraph(f"Task Report for {user['name']}", styles['Title'])
+#         elements.append(title)
+#         elements.append(Paragraph(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}", styles['Normal']))
+#         elements.append(Paragraph(" ", styles['Normal']))
         
-        # Create table data
-        table_data = [['Title', 'Due Date', 'Priority', 'Status']]
-        for task in tasks:
-            due_date = task['dueDate'].strftime('%Y-%m-%d') if hasattr(task['dueDate'], 'strftime') else str(task['dueDate'])
-            table_data.append([
-                task['title'][:30],
-                due_date,
-                task['priority'],
-                task['status']
-            ])
+#         # Create table data
+#         table_data = [['Title', 'Due Date', 'Priority', 'Status']]
+#         for task in tasks:
+#             due_date = task['dueDate'].strftime('%Y-%m-%d') if hasattr(task['dueDate'], 'strftime') else str(task['dueDate'])
+#             table_data.append([
+#                 task['title'][:30],
+#                 due_date,
+#                 task['priority'],
+#                 task['status']
+#             ])
         
-        # Create table
-        table = Table(table_data)
-        table.setStyle(TableStyle([
-            ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
-            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-            ('FONTSIZE', (0, 0), (-1, 0), 14),
-            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-            ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
-            ('GRID', (0, 0), (-1, -1), 1, colors.black)
-        ]))
+#         # Create table
+#         table = Table(table_data)
+#         table.setStyle(TableStyle([
+#             ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+#             ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+#             ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+#             ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+#             ('FONTSIZE', (0, 0), (-1, 0), 14),
+#             ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+#             ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+#             ('GRID', (0, 0), (-1, -1), 1, colors.black)
+#         ]))
         
-        elements.append(table)
+#         elements.append(table)
         
-        # Build PDF
-        doc.build(elements)
+#         # Build PDF
+#         doc.build(elements)
         
-        pdf_data = buffer.getvalue()
-        buffer.close()
+#         pdf_data = buffer.getvalue()
+#         buffer.close()
         
-        response = app.response_class(
-            response=pdf_data,
-            status=200,
-            mimetype='application/pdf',
-            headers={'Content-Disposition': 'attachment; filename=tasks_report.pdf'}
-        )
+#         response = app.response_class(
+#             response=pdf_data,
+#             status=200,
+#             mimetype='application/pdf',
+#             headers={'Content-Disposition': 'attachment; filename=tasks_report.pdf'}
+#         )
         
-        return response
+#         return response
         
-    except Exception as e:
-        print(f"PDF export error: {str(e)}")
-        return jsonify({'success': False, 'message': f'PDF export failed: {str(e)}'}), 500
+#     except Exception as e:
+#         print(f"PDF export error: {str(e)}")
+#         return jsonify({'success': False, 'message': f'PDF export failed: {str(e)}'}), 500
 
 # ==================== NEW FEATURE 5: DARK MODE PREFERENCE ====================
 
