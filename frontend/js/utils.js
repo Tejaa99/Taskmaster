@@ -136,9 +136,10 @@ async function apiRequest(endpoint, method = 'GET', data = null) {
 }
 
 // Test API connection
+// Replace the testAPIConnection function with this:
 async function testAPIConnection() {
     try {
-        const response = await fetch('http://localhost:5000/api/test');
+        const response = await fetch(`${API_BASE_URL}/test`);
         const data = await response.json();
         console.log('API Connection Test:', data);
         if (data.success) {
@@ -147,11 +148,10 @@ async function testAPIConnection() {
         }
     } catch (error) {
         console.error('❌ Backend connection failed:', error);
-        showToast('Cannot connect to backend server. Make sure it\'s running on port 5000', 'error');
+        showToast('Cannot connect to backend server. Please try again later.', 'error');
         return false;
     }
 }
-
 // ==================== DARK MODE FUNCTIONS ====================
 
 // Initialize theme
